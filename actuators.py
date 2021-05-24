@@ -17,9 +17,11 @@ class Step:
         else:
             raise TypeError('Must be "ccw" or "cw"')
 
-        # check
-        if delay > 0:
+        # check delay is positive and over 5us
+        if delay >= 5:
             self.delay = delay
+        else:
+            raise TypeError('Must be greater than 5us')
 
 
 class Motor:
