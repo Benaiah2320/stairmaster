@@ -53,7 +53,7 @@ class TestStep(unittest.TestCase):
 
 class TestMotor(unittest.TestCase):
 
-    def test_init_delay_int_fail(self):
+    def test_init_min_delay_int_fail(self):
         """
         Test that delay fails when not int
         """
@@ -80,6 +80,33 @@ class TestMotor(unittest.TestCase):
         for i in values:
             self.assertEqual(i, Motor(1, 2, 3, 400, min_delay=i).min_delay)
 
+    def test_init_max_delay_int_fail(self):
+        """
+        Test that delay fails when not int
+        """
+
+        values = ["5", "string"]
+        for i in values:
+            self.assertRaises(TypeError, Motor, 1, 2, 3, 400, 5, i)
+
+    def test_init_max_delay_min_fail(self):
+        """
+        Test that delay fails when not greater than 5us
+        """
+
+        values = [2, -5, -100, 4]
+        for i in values:
+            self.assertRaises(ValueError, Motor, 1, 2, 3, 400, 5, i)
+
+    def test_init_max_delay_pass(self):
+        """
+        Tests that delay passes when 5 or greater
+        """
+
+        values = [100, 5]
+        for i in values:
+            self.assertEqual(i, Motor(1, 2, 3, 400, max_delay=i).max_delay)
+
     def test_init_pin_str_int_fail(self):
         """
         Test that init fails when any pin value isn't an int or a string
@@ -98,7 +125,7 @@ class TestMotor(unittest.TestCase):
                 values['enable_pin'][i],
                 values['direction_pin'][i],
                 values['step_pin'][i],
-                100,
+                400,
             )
 
     def test_init_pin_unequal_fail(self):
@@ -151,7 +178,7 @@ class TestMotor(unittest.TestCase):
 
         values = ["5", "string"]
         for i in values:
-            self.assertRaises(TypeError, Motor, 1, 2, 3, 400, 10, i)
+            self.assertRaises(TypeError, Motor, 1, 2, 3, 400, 10, 500, i)
 
     def test_init_max_delta_delay_min_fail(self):
         """
@@ -160,7 +187,7 @@ class TestMotor(unittest.TestCase):
 
         values = [2, -5, -100, 4]
         for i in values:
-            self.assertRaises(ValueError, Motor, 1, 2, 3, 400, 10, i)
+            self.assertRaises(ValueError, Motor, 1, 2, 3, 400, 10, 500, i)
 
     def test_init_max_delta_delay_pass(self):
         """

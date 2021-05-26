@@ -35,6 +35,7 @@ class Motor:
             step_pin,
             steps_per_rev,
             min_delay=5,
+            max_delay=500,
             max_delta_delay=5,
     ):
         valid_steps_per_rev = [
@@ -68,10 +69,19 @@ class Motor:
         else:
             raise TypeError
 
-        # delay must be int and greater than 5us
+        # min_delay must be int and greater than 5us
         if type(min_delay) == int:
             if min_delay >= 5:
                 self.min_delay = min_delay
+            else:
+                raise ValueError('Must be greater than 5us')
+        else:
+            raise TypeError('Must be an integer')
+
+        # max_delay must be int and greater than 5us
+        if type(max_delay) == int:
+            if max_delay >= 5:
+                self.max_delay = max_delay
             else:
                 raise ValueError('Must be greater than 5us')
         else:
