@@ -80,7 +80,7 @@ class TestMotor(unittest.TestCase):
         for i in values:
             self.assertEqual(i, Motor(1, 2, 3, 400, min_delay=i).min_delay)
 
-    def test_init_max_delay_int_fail(self):
+    def test_init_default_max_delay_int_fail(self):
         """
         Test that delay fails when not int
         """
@@ -89,7 +89,7 @@ class TestMotor(unittest.TestCase):
         for i in values:
             self.assertRaises(TypeError, Motor, 1, 2, 3, 400, 5, i)
 
-    def test_init_max_delay_min_fail(self):
+    def test_init_default_max_delay_min_fail(self):
         """
         Test that delay fails when not greater than 5us
         """
@@ -98,14 +98,17 @@ class TestMotor(unittest.TestCase):
         for i in values:
             self.assertRaises(ValueError, Motor, 1, 2, 3, 400, 5, i)
 
-    def test_init_max_delay_pass(self):
+    def test_init_default_max_delay_pass(self):
         """
         Tests that delay passes when 5 or greater
         """
 
         values = [100, 5]
         for i in values:
-            self.assertEqual(i, Motor(1, 2, 3, 400, max_delay=i).max_delay)
+            self.assertEqual(
+                i,
+                Motor(1, 2, 3, 400, default_max_delay=i).default_max_delay
+            )
 
     def test_init_pin_str_int_fail(self):
         """
